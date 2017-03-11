@@ -30,21 +30,7 @@
 
         movieService.addMovie(newMovie);
 
-        movieCtrl.title = null;
-        movieCtrl.year = null;
-        movieCtrl.length = null;
-        movieCtrl.image = null;
-
-
-      }
-
-
-
-
-
-
-    }
+        movieCtrl = {};
+    }}
      //se establece un objeto de angular normal
-
-
 })();
