@@ -5,13 +5,13 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Title</label>
-            <input required ng-model="movieCtrl.title">
+            <input required ng-model="movie.title">
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Year</label>
-            <input type="number" ng-model="movieCtrl.year" required ng-pattern="/^[0-9]{4}$/" name="year">
+            <input type="number" ng-model="movie.year" required ng-pattern="/^[0-9]{4}$/" name="year">
             <div ng-messages="movieForm.year.$error" role="alert" multiple>
               <div ng-message="required" class="my-message">Debe ingresar un año</div>
               <div ng-message="pattern" class="my-message">Solo puede poner 4 dígitos
@@ -25,7 +25,7 @@
       <div required layout-gt-sm="row">
         <md-input-container class="md-block">
           <label>Length</label>
-          <input ng-model="movieCtrl.length">
+          <input ng-model="movie.length">
 
         </md-input-container>
       </div>
@@ -33,7 +33,7 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block">
             <label>Image</label>
-            <input type="file"  required id="photo" ng-model="movieCtrl.image">
+            <input type="file"  required id="photo" ng-model="movie.image">
           </md-input-container>
         </div>
 
@@ -41,8 +41,10 @@
 
     </div>
   </md-content>
-            <md-button ng-disabled="movieForm.$valid"  ng-click="movieCtrl.preSave()" class="btn1" >Save</md-button>
+            <md-button ng-disabled="movieForm.$valid"  ng-click="preSave()" class="btn1" >Save</md-button>
             <!--<md-button ng-click="movieForm.$valid && movieCtrl.save()" class="btn1" >Save</md-button>-->
+
+            
 
         </form>
       </div>
@@ -55,14 +57,16 @@
       <th>Year</th>
       <th>Length</th>
       <th>image</th>
+      <th></th>
     </tr>
   </thead>
-  <tbody>
-    <tr ng-repeat="movie in movieCtrl.movieList">
+  <tbody> 
+    <tr ng-repeat="movie in movieList">
       <td>{{movie.title}}</td>
       <td>{{movie.year}}</td>
       <td>{{movie.length}}</td>
       <td><img ng-src="{{movie.image}}"></td>
+      <td><md-button ng-click="remove($index)" class="btn2">Delete</span></td>
     </tr>
   </tbody>
 </table>

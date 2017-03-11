@@ -2,35 +2,53 @@
   angular
     .module('myApp')
     .controller('movieController', movieController);
-    function movieController(movieService,ImageService,Upload){ //se inyecta el service userService en el controlador para que se tenga acceso
+
+    function movieController($scope,movieService,ImageService,Upload){ //se inyecta el service userService en el controlador para que se tenga acceso
       //controlador
-      var movieCtrl = this; //binding del controlador con el html, solo en el controlador
-      movieCtrl.cloudObj = ImageService.getConfiguration();
 
-      function init(){ // función que se llama así misma para indicar que sea lo primero que se ejecute
-        movieCtrl.movieList = movieService.getMovies();
+      // var movieCtrl = this; //binding del controlador con el html, solo en el controlador
+      $scope.movie = {};
+      $scope.movieList =  movieService.getMovies();
+
+      var cloudObj = ImageService.getConfiguration();
+
+      
+//    movies = [{
+//       title: 'Harry Potter',
+//       year:'2001',
+//       length: '1:20',
+//       image:''
+//     }];
+
+      $scope.preSave = function(){
+        // cloudObj.data.file = document.getElementById("photo").files[0];
+        // Upload.upload(cloudObj)
+        //   .success(function(data){
+        //     $scope.save(data.url);
+        //   });
+        var data = "ww.hola.com";
+        $scope.saveMovie(data);//data.url
       }
-      init();
 
-      movieCtrl.preSave = function(){
-        movieCtrl.cloudObj.data.file = document.getElementById("photo").files[0];
-        Upload.upload(movieCtrl.cloudObj)
-          .success(function(data){
-            movieCtrl.save(data.url);
-          });
-      }
-
-      movieCtrl.save= function(pimage){
-        var newMovie ={
-          title : movieCtrl.title,
-          year : movieCtrl.year,
-          length : movieCtrl.length,
-          image: pimage
-        }
+      $scope.saveMovie= function(pImageUrl){
+        var newMovie = $scope.movie;
+          newMovie.image = pImageUrl;
+        // {
+        //   title : movie.title,
+        //   year : movie.year,
+        //   length : movie.length,
+        //   image: pImageUrl
+        // }
 
         movieService.addMovie(newMovie);
+        $scope.movie = {};
 
-        movieCtrl = {};
-    }}
+      }
+
+    $scope.remove= function(pMovie){    
+      movieService.deleteMovie(pMovie);
+      $scope.movieList =  movieService.getMovies();
+    }
+  }
      //se establece un objeto de angular normal
 })();
